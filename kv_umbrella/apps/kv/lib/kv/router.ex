@@ -1,4 +1,6 @@
 defmodule KV.Router do
+  require Logger
+
   @doc """
   Dispatch the given `mod`, `fun`, `args` request
   to the appropriate node based on the `bucket`.
@@ -24,7 +26,10 @@ defmodule KV.Router do
     raise "could not find entry for #{inspect(bucket)} in table #{inspect(table())}"
   end
 
+  @doc """
+  The routing table.
+  """
   def table do
-    [{?a..?m, :foo@YL}, {?n..?z, :bar@YL}]
+    Application.fetch_env!(:kv, :routing_table)
   end
 end
